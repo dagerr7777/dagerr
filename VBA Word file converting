@@ -1,0 +1,549 @@
+ub array_test_test()
+'
+
+'formatowanie czcionki i tabulatora
+
+    Selection.WholeStory
+    Selection.Font.Name = "Georgia"
+    Selection.Font.Size = 9
+    Selection.ParagraphFormat.Alignment = wdAlignParagraphJustify
+    With Selection.ParagraphFormat
+        .LeftIndent = CentimetersToPoints(0)
+        .RightIndent = CentimetersToPoints(0)
+        .SpaceBefore = 0
+        .SpaceBeforeAuto = False
+        .SpaceAfter = 0
+        .SpaceAfterAuto = False
+        .LineSpacingRule = wdLineSpaceMultiple
+        .LineSpacing = LinesToPoints(0.95)
+        .Alignment = wdAlignParagraphJustify
+        .WidowControl = False
+        .KeepWithNext = False
+        .KeepTogether = False
+        .PageBreakBefore = False
+        .NoLineNumber = False
+        .Hyphenation = False
+        .FirstLineIndent = CentimetersToPoints(0)
+        .OutlineLevel = wdOutlineLevelBodyText
+        .CharacterUnitLeftIndent = 0
+        .CharacterUnitRightIndent = 0
+        .CharacterUnitFirstLineIndent = 0
+        .LineUnitBefore = 0
+        .LineUnitAfter = 0
+        .MirrorIndents = False
+        .TextboxTightWrap = wdTightNone
+    End With
+    With Selection.ParagraphFormat
+        .LeftIndent = CentimetersToPoints(0)
+        .RightIndent = CentimetersToPoints(0)
+        .SpaceBefore = 0
+        .SpaceBeforeAuto = False
+        .SpaceAfter = 0
+        .SpaceAfterAuto = False
+        .LineSpacingRule = wdLineSpaceMultiple
+        .LineSpacing = LinesToPoints(0.95)
+        .Alignment = wdAlignParagraphJustify
+        .WidowControl = False
+        .KeepWithNext = False
+        .KeepTogether = False
+        .PageBreakBefore = False
+        .NoLineNumber = False
+        .Hyphenation = False
+        .FirstLineIndent = CentimetersToPoints(0)
+        .OutlineLevel = wdOutlineLevelBodyText
+        .CharacterUnitLeftIndent = 0
+        .CharacterUnitRightIndent = 0
+        .CharacterUnitFirstLineIndent = 0
+        .LineUnitBefore = 0
+        .LineUnitAfter = 0
+        .MirrorIndents = False
+        .TextboxTightWrap = wdTightNone
+    End With
+    Selection.ParagraphFormat.TabStops.ClearAll
+    ActiveDocument.DefaultTabStop = CentimetersToPoints(1.25)
+    Selection.ParagraphFormat.TabStops.Add Position:=CentimetersToPoints(3.93) _
+        , Alignment:=wdAlignTabRight, Leader:=wdTabLeaderSpaces
+
+'pogrubianie nazw miejscowosci
+      
+      'Application.ScreenUpdating = False
+    Dim x As Long, i As Long, ArrFnd()
+    ArrFnd = Array("ROPCZYCE", "IWIERZYCE", "OSTRÓW", "BĘDZIENICA", "BYSTRZYCA", "NOCKOWA", _
+    "OLCHOWA", "OLIMPÓW", "SIELEC", "WIERCANY", "WIŚNIOWA", "BRZEZÓWKA", "GNOJNICA", "LUBZINA", _
+    "MAŁA", "NIEDŹWIADA", "OKONIN", "BLIZNA", "KAMIONKA", "KOZODRZA", "OCIEKA", "SKRZYSZÓW", _
+    "ZDŻARY", "BĘDZIEMYŚL", "BORECZEK", "BUKOWINA", "CIERPISZ", "KAWĘCZYN", _
+     "KLĘCZANY", "KRZYWA", "RUDA", "SZKODNA", _
+    "ZABŁOCIE", "ZAGORZYCE", "BRONISZÓW", "BRZEZINY", "GLINIK", "NAWSIE", "RZESZÓW", "PASZCZYNA", _
+    "WIELOPOLE SKRZYŃSKIE", "SĘDZISZÓW MŁP.", "BOREK WIELKI", "BOREK MAŁY", _
+"ŁĄCZKI KUCHARSKIE", "CZARNA SĘDZISZOWSKA", "WOLICA ŁUGOWA", "WOLICA PIASKOWA", _
+"GÓRA ROPCZYCKA", "KAWĘCZYN SĘDZISZOWSKI", "WOLA OCIECKA", "CAŁY POWIAT", "SĘDZISZÓW MAŁOPOLSKI", "WIELOPOLE SKRZ.")
+    For x = 0 To UBound(ArrFnd)
+        With ActiveDocument.Range
+            With .Find
+                .ClearFormatting
+                .Replacement.ClearFormatting
+                .Text = ArrFnd(x)
+                .Highlight = False
+                .Replacement.Text = ""
+                .Forward = True
+                .Wrap = wdFindStop
+                .Format = False
+                .MatchWildcards = True
+                .Execute
+            End With
+            Do While .Find.Found
+                'i = i + 1
+                '.Start = .Words.First.Start
+                '.End = .Words.First.End
+                '.MoveEndWhile " ", -1
+                .InsertAfter ChrW(9658)
+                 '.End = .End + 1
+                .Font.Color = 204
+                .Font.Bold = True
+                .Collapse wdCollapseEnd
+                .Find.Execute
+            Loop
+        End With
+    Next
+    'Application.ScreenUpdating = True
+    'MsgBox i & " instances found."
+    
+    'pogrubienie podpisu i dodanie tabulatora
+    
+    
+    Selection.Find.ClearFormatting
+    Selection.Find.Replacement.ClearFormatting
+    Selection.Find.Replacement.Font.Bold = True
+
+    With Selection.Find
+        .Text = "so^p"
+        .Replacement.Text = "^tso^p"
+        .MatchWildcards = False
+          End With
+    Selection.Find.Execute Replace:=wdReplaceAll
+    
+    With Selection.Find
+        .Text = "so ^p"
+        .Replacement.Text = "^tso^p"
+          End With
+    Selection.Find.Execute Replace:=wdReplaceAll
+        
+        With Selection.Find
+        .Text = "jas^p"
+        .Replacement.Text = "^tjas^p"
+          End With
+    Selection.Find.Execute Replace:=wdReplaceAll
+    
+    With Selection.Find
+        .Text = "dc^p"
+        .Replacement.Text = "^tdc^p"
+          End With
+    Selection.Find.Execute Replace:=wdReplaceAll
+    
+    With Selection.Find
+        .Text = "naj^p"
+        .Replacement.Text = "^tnaj^p"
+          End With
+    Selection.Find.Execute Replace:=wdReplaceAll
+    
+    With Selection.Find
+        .Text = "kbr^p"
+        .Replacement.Text = "^tkbr^p"
+          End With
+    Selection.Find.Execute Replace:=wdReplaceAll
+    
+    With Selection.Find
+        .Text = "mf^p"
+        .Replacement.Text = "^tmf^p"
+          End With
+    Selection.Find.Execute Replace:=wdReplaceAll
+      With Selection.Find
+        .Text = "red^p"
+        .Replacement.Text = "^tred^p"
+          End With
+    Selection.Find.Execute Replace:=wdReplaceAll
+    
+     With Selection.Find
+        .Text = "Mikołaj Froń^p"
+        .Replacement.Text = "^tMikołaj Froń^p"
+          End With
+    Selection.Find.Execute Replace:=wdReplaceAll
+    
+    With Selection.Find
+        .Text = "pga^p"
+        .Replacement.Text = "^tpga^p"
+          End With
+    Selection.Find.Execute Replace:=wdReplaceAll
+    
+    With Selection.Find
+        .Text = "mp^p"
+        .Replacement.Text = "^tmp^p"
+          End With
+    Selection.Find.Execute Replace:=wdReplaceAll
+    
+     With Selection.Find
+        .Text = "pg^p"
+        .Replacement.Text = "^tpg^p"
+          End With
+    Selection.Find.Execute Replace:=wdReplaceAll
+    
+    With Selection.Find
+        .Text = "ol^p"
+        .Replacement.Text = "^tol^p"
+          End With
+    Selection.Find.Execute Replace:=wdReplaceAll
+    
+    
+    'pogrubianie akapitu drugiego lub trzeciego
+    
+    If Documents.Count > 0 Then
+        With ActiveDocument
+            If .Paragraphs.Count > 2 Then
+                If Len(.Paragraphs(2).Range.Text) > 1 Then
+                    .Paragraphs(2).Range.Bold = True
+                Else
+                    .Paragraphs(3).Range.Bold = True
+                End If
+            Else
+                Beep
+                MsgBox "Paragraphs 2 and 3 don't exist!"
+            End If
+        End With
+    Else
+        Beep
+        MsgBox "There is no document open!"
+    End If
+    
+
+    
+    
+     'dodanie enter do tesktów sławka
+     
+     Selection.Find.ClearFormatting
+    Selection.Find.Replacement.ClearFormatting
+    With Selection.Find
+        .Text = "FOTO: ARCHIWUM –"
+        .Replacement.Text = "FOTO: ARCHIWUM^p"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = False
+        .MatchCase = False
+        .MatchWholeWord = False
+        .MatchWildcards = False
+        .MatchSoundsLike = False
+        .MatchAllWordForms = False
+    End With
+    Selection.Find.Execute Replace:=wdReplaceAll
+    
+    Selection.Find.ClearFormatting
+    Selection.Find.Replacement.ClearFormatting
+    With Selection.Find
+        .Text = "FOTO: S. OSKARBSKI –"
+        .Replacement.Text = "FOTO: S. OSKARBSKI^p"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = False
+        .MatchCase = False
+        .MatchWholeWord = False
+        .MatchWildcards = False
+        .MatchSoundsLike = False
+        .MatchAllWordForms = False
+    End With
+    Selection.Find.Execute Replace:=wdReplaceAll
+    
+    Selection.Find.ClearFormatting
+    Selection.Find.Replacement.ClearFormatting
+    With Selection.Find
+        .Text = "FOTO: R. BERDO –"
+        .Replacement.Text = "^&^p"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = False
+        .MatchCase = False
+        .MatchWholeWord = False
+        .MatchWildcards = False
+        .MatchSoundsLike = False
+        .MatchAllWordForms = False
+    End With
+    Selection.Find.Execute Replace:=wdReplaceAll
+    
+    Selection.Find.ClearFormatting
+    Selection.Find.Replacement.ClearFormatting
+    With Selection.Find
+        .Text = "FOTO: ARCHIWUM –"
+        .Replacement.Text = "^&^p"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = False
+        .MatchCase = False
+        .MatchWholeWord = False
+        .MatchWildcards = False
+        .MatchSoundsLike = False
+        .MatchAllWordForms = False
+    End With
+    Selection.Find.Execute Replace:=wdReplaceAll
+    
+
+        
+       
+    
+    
+    'formatowanie po formatowaniu
+    
+     Selection.Find.ClearFormatting
+    Selection.Find.Replacement.ClearFormatting
+    With Selection.Find.Replacement.Font
+        .SmallCaps = False
+        .AllCaps = False
+        .Bold = False
+        .Color = wdColorAutomatic
+    End With
+    With Selection.Find
+        .Text = "FOTO: UG WIELOPOLE SKRZYŃSKIE" & ChrW(9658)
+        .Replacement.Text = "FOTO: UG WIELOPOLE SKRZYŃSKIE"
+        .Forward = True
+        .Format = True
+        .MatchCase = False
+        .MatchWholeWord = False
+        .MatchWildcards = False
+        .MatchSoundsLike = False
+        .MatchAllWordForms = False
+    End With
+    Selection.Find.Execute Replace:=wdReplaceAll
+    
+    Selection.Find.ClearFormatting
+    Selection.Find.Replacement.ClearFormatting
+    With Selection.Find.Replacement.Font
+        .SmallCaps = False
+        .AllCaps = False
+        .Bold = False
+        .Color = wdColorAutomatic
+    End With
+    With Selection.Find
+        .Text = "FOTO: KPP ROPCZYCE" & ChrW(9658)
+        .Replacement.Text = "FOTO: KPP ROPCZYCE"
+        .Forward = True
+        .Format = True
+        .MatchCase = False
+        .MatchWholeWord = False
+        .MatchWildcards = False
+        .MatchSoundsLike = False
+        .MatchAllWordForms = False
+    End With
+    Selection.Find.Execute Replace:=wdReplaceAll
+    
+        Selection.Find.ClearFormatting
+    Selection.Find.Replacement.ClearFormatting
+    With Selection.Find.Replacement.Font
+        .SmallCaps = False
+        .AllCaps = False
+        .Bold = False
+        .Color = wdColorAutomatic
+    End With
+    With Selection.Find
+        .Text = "FOTO: UG OSTRÓW" & ChrW(9658)
+        .Replacement.Text = "FOTO: UG OSTRÓW"
+        .Forward = True
+        .Format = True
+        .MatchCase = False
+        .MatchWholeWord = False
+        .MatchWildcards = False
+        .MatchSoundsLike = False
+        .MatchAllWordForms = False
+    End With
+    Selection.Find.Execute Replace:=wdReplaceAll
+    
+    
+        
+    
+     'Sub convert_paragraph_after_finding()
+    Dim rRng As Range
+    Set rRng = ActiveDocument.Range
+    With rRng.Find
+         'Find the word
+        Do While .Execute(findText:="RAMKA", MatchWholeWord:=True)
+     'move the end of the range to the end of the paragraph containing the found word
+    rRng.End = ActiveDocument.Range.End
+    If rRng.Paragraphs.Count > 1 Then
+    rRng.Start = rRng.Paragraphs(2).Range.Start
+    rRng.Select 'for testing only
+Else
+    MsgBox "There are no more paragraphs!"
+End If
+             'format the range
+            With rRng
+                .Font.Name = "Arial Narrow"
+                .Font.Size = 8
+                With .ParagraphFormat
+                    .LeftIndent = CentimetersToPoints(0)
+                    .RightIndent = CentimetersToPoints(0)
+                    .SpaceBefore = 0
+                    .SpaceBeforeAuto = False
+                    .SpaceAfter = 0
+                    .SpaceAfterAuto = False
+                    .LineSpacingRule = wdLineSpaceMultiple
+                    .LineSpacing = LinesToPoints(0.9)
+                    .Alignment = wdAlignParagraphJustify
+                    .WidowControl = True
+                    .KeepWithNext = False
+                    .KeepTogether = False
+                    .PageBreakBefore = False
+                    .NoLineNumber = False
+                    .Hyphenation = True
+                    .FirstLineIndent = CentimetersToPoints(0)
+                    .OutlineLevel = wdOutlineLevelBodyText
+                    .CharacterUnitLeftIndent = 0
+                    .CharacterUnitRightIndent = 0
+                    .CharacterUnitFirstLineIndent = 0
+                    .LineUnitBefore = 0
+                    .LineUnitAfter = 0
+                    .MirrorIndents = False
+                    .TextboxTightWrap = wdTightNone
+                    
+                End With
+            End With
+             'and stop looking
+            Exit Do
+        Loop
+    End With
+lblr_Exit:
+    Set orRng = Nothing
+    
+    'Sub FOTO()
+             
+    Dim fRng As Range
+    Set fRng = ActiveDocument.Range
+    With fRng.Find
+         
+        Do While .Execute(findText:="FOTO", MatchWholeWord:=True)
+     
+    fRng.End = fRng.Paragraphs(1).Range.End
+     
+            With fRng
+                .Font.Name = "Times New Roman"
+                .Font.Size = 5
+                '.Font.Italic = wdToggle
+                .Bold = False
+                .Font.SmallCaps = False
+                .Font.AllCaps = True
+                With .ParagraphFormat
+                    .LeftIndent = CentimetersToPoints(0)
+                    .RightIndent = CentimetersToPoints(0)
+                    .SpaceBefore = 0
+                    .SpaceBeforeAuto = False
+                    .SpaceAfter = 0
+                    .SpaceAfterAuto = False
+                    .LineSpacingRule = wdLineSpaceMultiple
+                    .LineSpacing = LinesToPoints(0.9)
+                    .Alignment = wdAlignParagraphJustify
+                    .WidowControl = True
+                    .KeepWithNext = False
+                    .KeepTogether = False
+                    .PageBreakBefore = False
+                    .NoLineNumber = False
+                    .Hyphenation = True
+                    .FirstLineIndent = CentimetersToPoints(0)
+                    .OutlineLevel = wdOutlineLevelBodyText
+                    .CharacterUnitLeftIndent = 0
+                    .CharacterUnitRightIndent = 0
+                    .CharacterUnitFirstLineIndent = 0
+                    .LineUnitBefore = 0
+                    .LineUnitAfter = 0
+                    .MirrorIndents = False
+                    .TextboxTightWrap = wdTightNone
+                End With
+                .Collapse 0
+            End With
+             
+            'Exit Do
+        Loop
+    End With
+lblf_Exit:
+    Set fRng = Nothing
+    'Exit Sub
+    
+    
+    'Sub srodtytul()
+
+   
+Dim cPar As Paragraph
+    For Each cPar In ActiveDocument.Range.Paragraphs
+       
+            If cPar.Range.ParagraphFormat.Alignment = wdAlignParagraphJustify _
+               And cPar.Range.Font.Size = 9 _
+                                And cPar.Range.Font.Name = "Georgia" _
+                 And Len(cPar.Range) > 10 _
+                 And Len(cPar.Range) < 60 _
+                 And Not cPar.Range.Characters.last = "." Then
+             
+                cPar.Range.ParagraphFormat.Alignment = wdAlignParagraphCenter
+                cPar.Range.InsertBefore Chr(13)
+                cPar.Range.Font.Size = 10
+                cPar.Range.Font.Bold = True
+              
+            
+                'And cPar.Range.Font.bold = True
+            End If
+       
+    Next
+    
+
+    
+    'Sub ScratchMacro()
+'A basic Word macro coded by Greg Maxey, http://gregmaxey.com/word_tips.html, 4/5/2018
+Dim oRng As Range
+Dim oRngFormat As Range
+  Set oRng = ActiveDocument.Range
+  With oRng.Find
+    Do While .Execute(findText:="FOTO", MatchWholeWord:=True)
+      oRng.Collapse wdCollapseEnd
+      On Error GoTo Err_Handler
+      Set oRngFormat = oRng.Paragraphs(1).Next.Range
+      'If oRngFormat = 0 Then
+    ' Set oRngFormat = orng.Paragraphs(2).Next.Range
+    ' End If
+     
+      With oRngFormat
+        .Font.Name = "Times New Roman"
+        .Font.Size = 8
+        .Font.Italic = wdToggle
+        .Bold = False
+        With .ParagraphFormat
+          .LeftIndent = CentimetersToPoints(0)
+          .RightIndent = CentimetersToPoints(0)
+          .SpaceBefore = 0
+          .SpaceBeforeAuto = False
+          .SpaceAfter = 10
+          .SpaceAfterAuto = False
+          .LineSpacingRule = wdLineSpaceMultiple
+          .LineSpacing = LinesToPoints(0.9)
+          .Alignment = wdAlignParagraphLeft
+          .WidowControl = True
+          .KeepWithNext = False
+          .KeepTogether = False
+          .PageBreakBefore = False
+          .NoLineNumber = False
+          .Hyphenation = True
+          .FirstLineIndent = CentimetersToPoints(0)
+          .OutlineLevel = wdOutlineLevelBodyText
+          .CharacterUnitLeftIndent = 0
+          .CharacterUnitRightIndent = 0
+          .CharacterUnitFirstLineIndent = 0
+          .LineUnitBefore = 0
+          .LineUnitAfter = 0
+          .MirrorIndents = False
+          .TextboxTightWrap = wdTightNone
+        End With
+        .Collapse 0
+      End With
+    Loop
+  End With
+lbl_Exit:
+  Set oRng = Nothing
+  Exit Sub
+Err_Handler:
+  Resume lbl_Exit
+  
+     
+  
+End Sub
